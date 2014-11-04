@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jdata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="entries.xsd">
+    <entries type="general" id="1">
+        <__comment>Google Search</__comment>
+        <url>https://www.google.co.uk?</url>
+        <display_string>search the internet</display_string>
+        <tokens>Google</tokens>
+        <tokens>find</tokens>
+        <tokens>research</tokens>
+    </entries>
+    <entries type="general" id="2">
+        <__comment>Go to Amazon</__comment>
+        <url>http://www.amazon.co.uk/?</url>
+        <display_string>buy books</display_string>
+        <tokens>Amazon</tokens>
+        <tokens>read</tokens>
+        <tokens>Kindle</tokens>
+    </entries>
+    <entries type="general" id="3">
+        <__comment>Visit Government</__comment>
+        <url>http://www.gov.uk/?</url>
+        <display_string>access government services</display_string>
+        <tokens>UK</tokens>
+        <tokens>legislation</tokens>
+        <tokens>find</tokens>
+        <tokens>out</tokens>
+        <tokens>about</tokens>
+    </entries>
+</jdata>

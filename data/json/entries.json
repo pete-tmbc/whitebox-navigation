@@ -1,0 +1,30 @@
+{"jdata": {
+    "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+    "xsi:noNamespaceSchemaLocation": "data/xml/entries.xsd",
+    "entries": [
+        {
+            "url": "https://www.google.co.uk?",
+            "tokens": ["Google", "find", "research"],
+            "type": "general",
+            "display_string": "search the internet",
+            "id": "1",
+            "__comment": "Google Search"
+        },
+        {
+            "type": "general",
+            "tokens": ["Amazon", "read", "Kindle"],
+            "url": "http://www.amazon.co.uk/?",
+            "display_string": "buy books",
+            "id": "2",
+            "__comment": "Go to Amazon"
+        },
+        {
+            "__comment": "Visit Government",
+            "id": "3",
+            "display_string": "access government services",
+            "type": "general",
+            "tokens": ["UK", "legislation", "find", "out", "about"],
+            "url": "http://www.gov.uk/?"
+        }
+    ]
+}}
