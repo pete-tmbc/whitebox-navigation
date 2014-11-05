@@ -60,11 +60,11 @@ GetOptions (
 die pod2usage(2) if $help;
 die pod2usage(
     -msg        => "Missing XML input file",
-    -verbose    => 2
+    -exitval    => 2
 ) unless $input_file;
 die pod2usage(
     -msg        => "Missing Apache config output file",
-    -verbose    => 2
+    -exitval    => 2
 ) unless $output_file;
 die pod2usage(
     -msg        => "Missing XSD schema file",
@@ -125,9 +125,9 @@ while(my $line = <$xml_file>) {
         $line =~ s/id(\s|)=(\s|)"([0-9])+"/id = "$i"/g;
 
         if($debug) {
-            print "re-numbered: $line\nwriting to Apache config: RewriteCond %{QUERY_STRING} (\?|&)id=$i\$ [NC]\n";
+            print "re-numbered: $line\nwriting to Apache config: RewriteCond %{QUERY_STRING} (?:^|&)id=$i\$ [NC]\n";
         };
-        print $apache_config_file 'RewriteCond %{QUERY_STRING} (\?|&)id=' . $i . '$ [NC]' , "\n";
+        print $apache_config_file 'RewriteCond %{QUERY_STRING} (?:^|&)id=' . $i . '$ [NC]' , "\n";
         $i++;
         if($debug) {
             print "Finished ID sequencing\n";
@@ -144,7 +144,7 @@ while(my $line = <$xml_file>) {
 
         print $apache_config_file 'RewriteRule ^(.*)$ ' . $1 . ' [NE,L,R]', "\n\n";
         unless($1 =~ /\?$/) {
-            $line_end_w .= "entry id: $i, url: $1\n";
+            $line_end_w .= "$i: $1\n";
         };
 
     };
