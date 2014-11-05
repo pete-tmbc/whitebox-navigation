@@ -7,37 +7,13 @@
     "type": "Web App",
     "needs": [
         {
-            "need": "jquery.js"
+            "need": "Web Developer"
         },
         {
-            "need": "typeahead.js"
+            "need": "Web Designer"
         },
         {
-            "need": "bloodhound.js"
-        },
-        {
-            "need": "handlebars.js"
-        },
-        {
-            "need": "perl"
-        },
-        {
-            "need": "Getopt::Long"
-        },
-        {
-            "need": "File::Copy"
-        },
-        {
-            "need": "Pod::Usage"
-        },
-        {
-            "need": "XML::LibXML"
-        },
-        {
-            "need": "Google::Data::JSON"
-        },
-        {
-            "need": "JSON::Schema"
+            "need": "System Administrator"
         }
     ],
     "categories": [
@@ -83,6 +59,10 @@
             "@id": "http://www.json.org/"
         },
         {
+            "name": "wycats handlebars.js",
+            "@id": "http://handlebarsjs.com/"
+        },
+        {
             "name": "Perl",
             "@id": "https://www.perl.org/"
         },
@@ -93,6 +73,34 @@
         {
             "name": "W3C XML Schema Definition Language",
             "@id": "http://www.w3.org/TR/xmlschema11-1/"
+        },
+        {
+            "name": "Getopt::Long",
+            "@id": "http://perldoc.perl.org/Getopt/Long.html"
+        },
+        {
+            "name": "File::Copy",
+            "@id": "http://perldoc.perl.org/File/Copy.html"
+        },
+        {
+            "name": "Pod::Usage",
+            "@id": "http://perldoc.perl.org/Pod/Usage.html"
+        },
+        {
+            "name": "CPAN: XML::LibXML",
+            "@id": "http://search.cpan.org/~shlomif/XML-LibXML-2.0117/LibXML.pod"
+        },
+        {
+            "name": "CPAN: Google::Data::JSON",
+            "@id": "http://search.cpan.org/~takeru/Google-Data-JSON-0.1.3/lib/Google/Data/JSON.pm"
+        }
+    ],
+    "categories": [
+        {
+            "category": "Services"
+        },
+        {
+            "category": "online"
         }
     ]
 }
