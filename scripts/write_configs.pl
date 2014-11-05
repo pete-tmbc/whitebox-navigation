@@ -31,7 +31,6 @@ use File::Copy;
 use Pod::Usage;
 use XML::LibXML;
 use Google::Data::JSON;
-use JSON::Schema;
 
 my ($input_file, $tmp_file, $output_file, $xsd_file, $json_file);
 my $help        = 0;
