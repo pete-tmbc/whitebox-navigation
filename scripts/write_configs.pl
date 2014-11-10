@@ -43,7 +43,7 @@ my @xml_content;
 my $i           = 1;
 my $redir_cond  = '';
 my $redir_url   = '';
-my $line_end_w = '';
+my $addqmark    = '';
 
 # Set the options to use
 GetOptions (
@@ -58,33 +58,33 @@ GetOptions (
 # check options and die if no input or output is given
 die pod2usage(2) if $help;
 die pod2usage(
-    -msg        => "Missing XML input file",
-    -exitval    => 2
+    -msg            => "Missing XML input file",
+    -exitval        => 2
 ) unless $input_file;
 die pod2usage(
-    -msg        => "Missing Apache config output file",
-    -exitval    => 2
+    -msg            => "Missing Apache config output file",
+    -exitval        => 2
 ) unless $output_file;
 die pod2usage(
-    -msg        => "Missing XSD schema file",
-    -exitval    => 2
+    -msg            => "Missing XSD schema file",
+    -exitval        => 2
 ) unless $xsd_file;
 die pod2usage(
-    -msg        => "Missing JSON output file",
-    -exitval    => 2
+    -msg            => "Missing JSON output file",
+    -exitval        => 2
 ) unless $json_file;
 
 # assign values from the options
-$input_file     = $input_file;
-$tmp_file       = $input_file . "~";
-$output_file    = $output_file;
-$xsd_file       = $xsd_file;
-$json_file      = $json_file;
+$input_file         = $input_file;
+$tmp_file           = $input_file . "~";
+$output_file        = $output_file;
+$xsd_file           = $xsd_file;
+$json_file          = $json_file;
 
-$input_file     = $input_file;
-$output_file    = $output_file;
-$xsd_file       = $xsd_file;
-$json_file      = $json_file;
+$input_file         = $input_file;
+$output_file        = $output_file;
+$xsd_file           = $xsd_file;
+$json_file          = $json_file;
 
 $sourcefile         = $tmp_file;
 $destinationfile    = $input_file;
@@ -109,7 +109,7 @@ open(my $apache_config_file, ">", "$output_file")
     or die "Could not open '$output_file' $!\n";
 
 if($debug) {
-    print "Begin processing...";
+    print "Beginning processing...";
 };
 
 # Generate Apache config file and temporary, updated XML file
@@ -129,28 +129,35 @@ while(my $line = <$xml_file>) {
         print $apache_config_file 'RewriteCond %{QUERY_STRING} (?:^|&)id=' . $i . '$ [NC]' , "\n";
         $i++;
         if($debug) {
-            print "Finished ID sequencing\n";
+            print "finished ID sequencing\n";
         };
     };
 
     if($debug) {
-        print "Checking for URL...\n";
+        print "checking for URL...\n";
     };
     if($line =~ /<url>(.*)<\/url>/) {
         if($debug) {
             print "found: $line\n", 'writing to Apache config: RewriteRule ^(.*)$ ' . $1 . "[NE,L,R]";
         };
-
-        print $apache_config_file 'RewriteRule ^(.*)$ ' . $1 . ' [NE,L,R]', "\n\n";
-        unless($1 =~ /\?$/) {
-            $line_end_w .= "$i: $1\n";
+        
+        my $url = $1;
+        if($url =~ /\?$/) {
+            print $apache_config_file 'RewriteRule ^(.*)$ ' . $url . ' [NE,L,R]', "\n\n";
+        }
+        else {
+            print "[$url] is missing the '?' at the end. Do you want to add one? [no]/yes: ";
+            chomp($addqmark = <STDIN>);
+            if($addqmark eq 'yes') { # no point in checking 'no' value in this instance
+                $url = $url . "?";
+            }
+            print $apache_config_file 'RewriteRule ^(.*)$ ' . $url . ' [NE,L,R]', "\n\n";
         };
-
     };
 
          print $temp_file $line;
          if($debug) {
-             print "Finished writing Apache config.\n";
+             print "finished writing Apache config.\n";
          };
 }
 
@@ -172,7 +179,7 @@ if($debug) {
 
 # Validate the regenerated (temporary) XML file
 if($debug) {
-    print "Validating generated XML: $sourcefile\n";
+    print "validating generated XML: $sourcefile\n";
 };
 my $schema = XML::LibXML::Schema->new(location =>$xsd_file);
 my $parser = XML::LibXML->new;  
@@ -191,7 +198,7 @@ else {
 
 ## Convert the XML document into a JSON
 if($debug) {
-    print "Starting JSON conversion...\nopening $input_file\n";
+    print "starting JSON conversion...\nopening $input_file\n";
 };
 open($xml_file, "<", "$input_file")
     or die "Could not open file '$input_file' $!\n";
@@ -234,15 +241,11 @@ if($debug) {
 }
 close($input_file);
 
-print "****************** Done! ******************\n\n";
-
-if ($line_end_w) {
-    print "****************** WARNING ******************\n";
-    print "Following redirect entries are missing '?', please check:\n". $line_end_w. "\n";
-    print "*********************************************\n"
-}
-
 print <<EOF;
+
+
+************************** Done! **************************
+
 
 Your updated XML file is: $input_file
 Your Apache config file is: $output_file
