@@ -144,6 +144,7 @@ while(my $line = <$xml_file>) {
         my $url = $1;
         if($url =~ /\?$/) {
             print $apache_config_file 'RewriteRule ^(.*)$ ' . $url . ' [NE,L,R]', "\n\n";
+            print $temp_file $line;
         }
         else {
             print "[$url] is missing the '?' at the end. Do you want to add one? [no]/yes: ";
@@ -152,10 +153,12 @@ while(my $line = <$xml_file>) {
                 $url = $url . "?";
             }
             print $apache_config_file 'RewriteRule ^(.*)$ ' . $url . ' [NE,L,R]', "\n\n";
+            print $temp_file "<url>$url</url>\n";
         };
-    };
-
-         print $temp_file $line;
+    }
+    else {
+        print $temp_file $line;
+     };
          if($debug) {
              print "finished writing Apache config.\n";
          };
